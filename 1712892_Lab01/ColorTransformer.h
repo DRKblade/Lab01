@@ -70,6 +70,8 @@ namespace ColorTransformer {
     			auto norm = double(hist[c][j]) / double(src.cols * src.rows) * 20.0;
   				*p_dest = p_dest[(c+1) * offset] = norm * 100 >= (100 - i) ? 255 : 0;
   				p_dest++;
+  				for (int c2 = 1; c2 < n_channel; c2++)
+    				p_dest[((c+c2)%n_channel + 1) * offset] = 0;
     		}
 			}
 		}
