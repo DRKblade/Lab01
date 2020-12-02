@@ -61,20 +61,29 @@ int main(int argc, char** argv)
 	}
 	else if (command.find("brightness") != -1)
 	{
-  	char** _;
-  	ColorTransformer::ChangeBrightness(source, dest, strtof(argv[arg_used++], _));
+  	ColorTransformer::ChangeBrightness(source, dest, atof(argv[arg_used++]));
   	ShowImages(source, dest);
 	}
 	else if (command.find("contrast") != -1)
 	{
-  	char** _;
-  	ColorTransformer::ChangeContrast(source, dest, strtof(argv[arg_used++], _));
+  	ColorTransformer::ChangeContrast(source, dest, atof(argv[arg_used++]));
   	ShowImages(source, dest);
 	}
 	else if (command.find("equalhist") != -1)
 	{
   	ColorTransformer::HistogramEqualization(source, dest);
   	ShowImages(source, dest);
+	}
+	else if (command.find("hist") != -1)
+	{
+  	auto hist = ColorTransformer::Hist(source);
+  	for(int c = 0; c < hist.size(); c++) {
+    	cout << "Channel " << c << ':' << endl;
+    	for(int v = 0; v < 256; v++) {
+      	cout << hist[c][v] << ' ';
+    	}
+    	cout << endl << endl;
+  	}
 	}
 	if (argc > arg_used) imwrite(argv[arg_used++], dest);
 	return 0;

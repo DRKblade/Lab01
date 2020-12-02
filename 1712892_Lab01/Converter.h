@@ -277,11 +277,11 @@ namespace Converter
 					*/
 					double fC = fS * fV;
 					double fHComma = fH / 60;
-					double fX = fC * (1.0 - abs((int(fHComma) % 2 - 1.0)));
+					double fX = fC * (1.0 - abs(fmod(fHComma, 2) - 1.0));
 
 					double fR1, fG1, fB1;
 					fR1 = fG1 = fB1 = 0;
-					if (fHComma >= 0 && fHComma <= 1)
+					if (fHComma <= 1)
 					{
 						fR1 = fC;
 						fG1 = fX;

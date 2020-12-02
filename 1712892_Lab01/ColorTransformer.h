@@ -101,11 +101,15 @@ namespace ColorTransformer {
 
 		double result = 0;
 
+    double multiplier1 = 1.0 / (image1.rows*image1.cols);
+    double multiplier2 = 1.0 / (image2.rows*image2.cols);
 		for (int i = 0; i < image1_chanel; i++) 
 		{
 			for (int j = 0; j < 256; j++)
 			{
-				result += 2 * (imageRGB_1[i][j] - imageRGB_2[i][j]) * (imageRGB_1[i][j] - imageRGB_2[i][j]) / (imageRGB_1[i][j] + imageRGB_2[i][j]);
+  			auto val1 = imageRGB_1[i][j] * multiplier1,
+  			     val2 = imageRGB_2[i][j] * multiplier2;
+				result += (val1 - val2) / (val1 + val2);
 			}
 		}
 		return result;
