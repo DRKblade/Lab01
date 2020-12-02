@@ -23,29 +23,30 @@ int main(int argc, char** argv)
 	string path = string(argv[2]);
 	Mat source = imread(path, cv::IMREAD_COLOR);
 	Mat dest;
+	int arg_used = 3;
 	if (command.find("rgb2hsv") != -1)
 	{
-		if (Converter::RGB2HSV(source, dest))
+		if (Converter::RGB2HSV(source, dest)) {
   		ShowImages(source, dest);
-		else cout << "Conversion failed";
+		} else cout << "Conversion failed";
 	}
 	else if (command.find("hsv2rgb") != -1)
 	{
-		if (Converter::HSV2RGB(source, dest))
+		if (Converter::HSV2RGB(source, dest)) {
   		ShowImages(source, dest);
-		else cout << "Conversion failed";
+		} else cout << "Conversion failed";
 	}
 	else if (command.find("rgb2gray") != -1)
 	{
-		if (!Converter::RGB2GrayScale(source, dest))
+		if (!Converter::RGB2GrayScale(source, dest)) {
   		ShowImages(source, dest);
-		else cout << "Conversion failed";
+		} else cout << "Conversion failed";
 	}
 	else if (command.find("gray2rgb") != -1)
 	{
-		if (!Converter::GrayScale2RGB(source, dest))
+		if (!Converter::GrayScale2RGB(source, dest)) {
   		ShowImages(source, dest);
-		else cout << "Conversion failed";
+		} else cout << "Conversion failed";
 	}
 	else if (command.find("compare") != -1) 
 	{
@@ -61,13 +62,13 @@ int main(int argc, char** argv)
 	else if (command.find("brightness") != -1)
 	{
   	char** _;
-  	ColorTransformer::ChangeBrightness(source, dest, strtof(argv[3], _));
+  	ColorTransformer::ChangeBrightness(source, dest, strtof(argv[arg_used++], _));
   	ShowImages(source, dest);
 	}
 	else if (command.find("contrast") != -1)
 	{
   	char** _;
-  	ColorTransformer::ChangeContrast(source, dest, strtof(argv[3], _));
+  	ColorTransformer::ChangeContrast(source, dest, strtof(argv[arg_used++], _));
   	ShowImages(source, dest);
 	}
 	else if (command.find("equalhist") != -1)
@@ -75,5 +76,6 @@ int main(int argc, char** argv)
   	ColorTransformer::HistogramEqualization(source, dest);
   	ShowImages(source, dest);
 	}
+	if (argc > arg_used) imwrite(argv[arg_used++], dest);
 	return 0;
 }
